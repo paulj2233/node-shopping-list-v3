@@ -17,6 +17,7 @@ app.use(morgan('common'));
 ShoppingList.create('beans', 2);
 ShoppingList.create('tomatoes', 3);
 ShoppingList.create('peppers', 4);
+ShoppingList.create('celery', 6);
 
 // adding some recipes to `Recipes` so there's something
 // to retrieve.
@@ -72,9 +73,9 @@ app.post('/recipes', jsonParser, (req, res) => {
   res.status(201).json(item);
 });
 
-app.delete('/recipes', (req, res) => {
+app.delete('/recipes/:id', (req, res) => {
   Recipes.delete(req.params.id);
-  console.log('Deleted recipe \'${req.params.id}\'');
+  console.log(`Deleted recipe \`${req.params.id}\``);
   res.status(204).end();
 })
 
@@ -82,6 +83,7 @@ app.delete('/recipes', (req, res) => {
 app.get('/recipes', (req, res) => {
   res.json(Recipes.get());
 })
+console.log(ShoppingList);
 
 app.listen(process.env.PORT || 8080, () => {
   console.log(`Your app is listening on port ${process.env.PORT || 8080}`);
